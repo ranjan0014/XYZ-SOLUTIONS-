@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Legend
@@ -22,6 +22,20 @@ const efficiencyData = [
 ];
 
 const DashboardPreview: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.2 }
+    );
+    const el = document.getElementById('dashboard');
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, []);
+
   return (
     <section id="dashboard" className="py-24 bg-xyz-black relative overflow-hidden">
       {/* Decorative background element */}
@@ -30,7 +44,7 @@ const DashboardPreview: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           
-          <div className="w-full lg:w-1/2 space-y-8">
+          <div className={`w-full lg:w-1/2 space-y-8 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <h2 className="text-4xl md:text-5xl font-bold text-white">
               INTELLIGENT <br />
               <span className="text-xyz-blue">DATA VISUALIZATION</span>
@@ -47,7 +61,7 @@ const DashboardPreview: React.FC = () => {
                 "Historical Route Playback",
                 "Customizable Reports"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-gray-300 group hover:text-white transition-colors cursor-pointer">
+                <li key={idx} className="flex items-center gap-3 text-gray-300 group hover:text-white transition-colors cursor-pointer" style={{ transitionDelay: `${idx * 100}ms` }}>
                   <div className="w-2 h-2 bg-xyz-green rounded-full shadow-[0_0_10px_rgba(57,255,20,0.8)] group-hover:scale-125 transition-transform"></div>
                   {item}
                 </li>
@@ -59,7 +73,7 @@ const DashboardPreview: React.FC = () => {
             </button>
           </div>
 
-          <div className="w-full lg:w-1/2">
+          <div className={`w-full lg:w-1/2 transition-all duration-1000 ease-out delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <div className="glass-panel rounded-xl p-6 border border-xyz-blue/20 shadow-[0_0_50px_rgba(0,243,255,0.05)] hover:shadow-[0_0_70px_rgba(0,243,255,0.1)] transition-all duration-500 relative">
               
               {/* Fake Dashboard Header */}
@@ -103,8 +117,8 @@ const DashboardPreview: React.FC = () => {
                         contentStyle={{ backgroundColor: '#111', borderColor: '#333', color: '#fff' }}
                         itemStyle={{ fontSize: '12px' }}
                       />
-                      <Area type="monotone" dataKey="speed" stroke="#00f3ff" fillOpacity={1} fill="url(#colorSpeed)" strokeWidth={2} />
-                      <Area type="monotone" dataKey="fuel" stroke="#39ff14" fillOpacity={1} fill="url(#colorFuel)" strokeWidth={2} />
+                      <Area isAnimationActive={isVisible} type="monotone" dataKey="speed" stroke="#00f3ff" fillOpacity={1} fill="url(#colorSpeed)" strokeWidth={2} />
+                      <Area isAnimationActive={isVisible} type="monotone" dataKey="fuel" stroke="#39ff14" fillOpacity={1} fill="url(#colorFuel)" strokeWidth={2} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -116,7 +130,7 @@ const DashboardPreview: React.FC = () => {
                         <XAxis type="number" hide />
                         <YAxis dataKey="name" type="category" width={80} stroke="#888" tick={{fontSize: 10}} />
                         <Tooltip cursor={{fill: 'rgba(255,255,255,0.05)'}} contentStyle={{ backgroundColor: '#111', borderColor: '#333' }} />
-                        <Bar dataKey="efficiency" fill="#00f3ff" radius={[0, 4, 4, 0]} barSize={12} />
+                        <Bar isAnimationActive={isVisible} dataKey="efficiency" fill="#00f3ff" radius={[0, 4, 4, 0]} barSize={12} />
                      </BarChart>
                    </ResponsiveContainer>
                 </div>

@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Twitter, Linkedin, Facebook, MapPin, Mail, Phone, Users, Zap } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+    const el = document.getElementById('contact');
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, []);
+
   return (
-    <footer id="contact" className="bg-xyz-black border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
+    <footer id="contact" className={`bg-xyz-black border-t border-white/10 pt-16 pb-8 relative overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       {/* Footer background glow */}
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-xyz-blue via-xyz-green to-xyz-blue"></div>
       

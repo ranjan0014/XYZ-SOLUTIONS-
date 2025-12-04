@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Map, Zap, Lock, Truck, BarChart3, Radio } from 'lucide-react';
 import { FeatureItem } from '../types';
 
@@ -42,12 +42,32 @@ const featureList: FeatureItem[] = [
 ];
 
 const Features: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('features');
+    if (section) observer.observe(section);
+
+    return () => {
+      if (section) observer.unobserve(section);
+    };
+  }, []);
+
   return (
     <section id="features" className="py-24 bg-xyz-dark relative overflow-hidden">
        {/* Ambient glow for section */}
        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-xyz-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+       <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="text-center mb-16">
           <h2 className="text-xyz-blue text-sm font-bold uppercase tracking-[0.2em] mb-2">Capabilities</h2>
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">ENGINEERED FOR <span className="text-xyz-green">CONTROL</span></h3>
@@ -57,10 +77,11 @@ const Features: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featureList.map((feature) => (
+          {featureList.map((feature, index) => (
             <div 
               key={feature.id} 
-              className="glass-panel p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group hover:-translate-y-3 cursor-default hover:shadow-[0_0_30px_rgba(0,243,255,0.15)] hover:border-xyz-blue/50 relative overflow-hidden"
+              className={`glass-panel p-8 rounded-xl hover:bg-white/5 transition-all duration-500 group hover:-translate-y-3 cursor-default hover:shadow-[0_0_30px_rgba(0,243,255,0.15)] hover:border-xyz-blue/50 relative overflow-hidden`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               {/* Card hover sheen */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
