@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  // Use the env var if present, otherwise use the key provided by the user
+  // Using the provided key as fallback
   const apiKey = env.API_KEY || "AIzaSyBfBv1AcTl7BCwKD6Ifs2BMGmRnE1wfxDo";
 
   return {
     plugins: [react()],
     define: {
-      // This replaces 'process.env.API_KEY' in your code with the actual string value
+      // This prevents "process is not defined" error in the browser
       'process.env.API_KEY': JSON.stringify(apiKey),
     }
   };
