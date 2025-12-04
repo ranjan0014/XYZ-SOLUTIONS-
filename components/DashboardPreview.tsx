@@ -47,26 +47,32 @@ const DashboardPreview: React.FC = () => {
                 "Historical Route Playback",
                 "Customizable Reports"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-gray-300">
-                  <div className="w-2 h-2 bg-xyz-green rounded-full shadow-[0_0_10px_rgba(57,255,20,0.8)]"></div>
+                <li key={idx} className="flex items-center gap-3 text-gray-300 group hover:text-white transition-colors cursor-pointer">
+                  <div className="w-2 h-2 bg-xyz-green rounded-full shadow-[0_0_10px_rgba(57,255,20,0.8)] group-hover:scale-125 transition-transform"></div>
                   {item}
                 </li>
               ))}
             </ul>
 
-            <button className="mt-8 bg-white text-black hover:bg-gray-200 px-8 py-3 rounded-full font-bold transition-colors">
+            <button className="mt-8 bg-white text-black hover:bg-gray-200 px-8 py-3 rounded-full font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
               Request Demo
             </button>
           </div>
 
           <div className="w-full lg:w-1/2">
-            <div className="glass-panel rounded-xl p-6 border border-xyz-blue/20 shadow-[0_0_50px_rgba(0,243,255,0.05)]">
+            <div className="glass-panel rounded-xl p-6 border border-xyz-blue/20 shadow-[0_0_50px_rgba(0,243,255,0.05)] hover:shadow-[0_0_70px_rgba(0,243,255,0.1)] transition-all duration-500 relative">
               
               {/* Fake Dashboard Header */}
               <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                 <div>
                   <h4 className="text-white font-bold">Fleet Overview</h4>
-                  <span className="text-xs text-xyz-green animate-pulse">● Live Data Stream</span>
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-xyz-green opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-xyz-green"></span>
+                    </span>
+                    <span className="text-xs text-xyz-green">Live Data Stream</span>
+                  </div>
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-gray-500">Total Active Units</div>
@@ -76,8 +82,8 @@ const DashboardPreview: React.FC = () => {
 
               {/* Charts */}
               <div className="space-y-6">
-                <div className="h-48 w-full">
-                  <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Avg Fleet Speed vs Fuel Level</p>
+                <div className="h-48 w-full group">
+                  <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide group-hover:text-xyz-blue transition-colors">Avg Fleet Speed vs Fuel Level</p>
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data}>
                       <defs>
@@ -103,8 +109,8 @@ const DashboardPreview: React.FC = () => {
                   </ResponsiveContainer>
                 </div>
 
-                <div className="h-40 w-full pt-4 border-t border-white/10">
-                   <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Efficiency Score by Vehicle</p>
+                <div className="h-40 w-full pt-4 border-t border-white/10 group">
+                   <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide group-hover:text-xyz-green transition-colors">Efficiency Score by Vehicle</p>
                    <ResponsiveContainer width="100%" height="100%">
                      <BarChart data={efficiencyData} layout="vertical">
                         <XAxis type="number" hide />

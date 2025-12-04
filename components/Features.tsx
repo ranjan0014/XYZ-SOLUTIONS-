@@ -43,8 +43,11 @@ const featureList: FeatureItem[] = [
 
 const Features: React.FC = () => {
   return (
-    <section id="features" className="py-24 bg-xyz-dark relative">
-       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="py-24 bg-xyz-dark relative overflow-hidden">
+       {/* Ambient glow for section */}
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-xyz-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-xyz-blue text-sm font-bold uppercase tracking-[0.2em] mb-2">Capabilities</h2>
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">ENGINEERED FOR <span className="text-xyz-green">CONTROL</span></h3>
@@ -57,9 +60,12 @@ const Features: React.FC = () => {
           {featureList.map((feature) => (
             <div 
               key={feature.id} 
-              className="glass-panel p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group hover:-translate-y-2 cursor-default hover:shadow-[0_0_30px_rgba(0,243,255,0.1)] hover:border-xyz-blue/30"
+              className="glass-panel p-8 rounded-xl hover:bg-white/5 transition-all duration-300 group hover:-translate-y-3 cursor-default hover:shadow-[0_0_30px_rgba(0,243,255,0.15)] hover:border-xyz-blue/50 relative overflow-hidden"
             >
-              <div className="w-14 h-14 bg-xyz-black rounded-lg border border-white/10 flex items-center justify-center mb-6 group-hover:border-xyz-blue/50 transition-colors group-hover:scale-110 duration-300">
+              {/* Card hover sheen */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none"></div>
+              
+              <div className="w-14 h-14 bg-xyz-black rounded-lg border border-white/10 flex items-center justify-center mb-6 group-hover:border-xyz-blue/50 transition-colors group-hover:scale-110 duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
                 {feature.icon}
               </div>
               <h4 className="text-xl font-bold text-white mb-3 group-hover:text-xyz-blue transition-colors">

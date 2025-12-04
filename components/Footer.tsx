@@ -22,14 +22,14 @@ const Footer: React.FC = () => {
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
               Revolutionizing fleet management through secure, intelligent, and scalable GPS technology.
               <br/><br/>
-              <span className="text-yellow-500 font-bold flex items-center gap-1">
+              <span className="text-yellow-500 font-bold flex items-center gap-1 animate-pulse">
                 <Zap className="w-3 h-3" /> Built for Hustle Arena
               </span>
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-500 hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="text-gray-500 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
-              <a href="#" className="text-gray-500 hover:text-white transition-colors"><Facebook className="w-5 h-5" /></a>
+              <a href="#" className="text-gray-500 hover:text-white transition-colors hover:scale-110"><Twitter className="w-5 h-5" /></a>
+              <a href="#" className="text-gray-500 hover:text-white transition-colors hover:scale-110"><Linkedin className="w-5 h-5" /></a>
+              <a href="#" className="text-gray-500 hover:text-white transition-colors hover:scale-110"><Facebook className="w-5 h-5" /></a>
             </div>
           </div>
 
